@@ -67,7 +67,7 @@ Notes for a public deployment:
 | First run | 75% (15/20) | Baseline prompt, 800-character chunks |
 | Current | 80% (16/20) | Cleaner prompt with a `NOT_FOUND` signal, larger chunks, higher top-k, weak-match filter |
 
-The scoring is keyword-based, so it is approximate. Some correct answers worded differently can fail, and I review the failures by hand.
+The scoring is keyword-based, so it is approximate. Some correct answers worded differently can fail, and I review failures manually.
 
 ## Results
 - Documents indexed: 3 PDFs (70 pages)
