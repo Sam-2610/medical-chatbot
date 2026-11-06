@@ -60,7 +60,7 @@ Notes for a public deployment:
 - The deploy installs large ML libraries, so the first build takes a few minutes.
 
 ## Evaluation
-`eval.py` asks 20 questions written from the source PDFs: 17 that the documents can answer and 3 that they cannot (cricket, a drug dose, diabetes treatment). An answer passes if it contains enough of the expected keywords and does not contradict itself. Off-topic questions pass only if the bot refuses. Results are saved to `eval_results.csv`.
+`eval.py` asks 20 questions written from the source PDFs: 17 that the documents can answer and 3 that they cannot (cricket, a drug dose, diabetes treatment). An answer passes if it includes enough expected keywords and doesn't contradict itself. Off-topic questions pass only if the bot refuses. Results are saved to `eval_results.csv`.
 
 | Version | Accuracy | What changed |
 |---|---|---|
