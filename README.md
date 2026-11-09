@@ -4,12 +4,12 @@ A retrieval-augmented chatbot that answers health questions **only from a set of
 
 **Live demo:** https://medical-chatbot2610.streamlit.app
 
-> The demo runs on free hosting. If nobody has visited for a while the app goes to sleep, so the first load can take about a minute, and the first question also has to load the embedding model.
+> The demo runs on free hosting. If nobody has visited for a while, the app goes to sleep, so the first load can take about a minute, and the first question also has to load the embedding model.
 
 **Stack:** Python, sentence-transformers (all-MiniLM-L6-v2), Pinecone, LangChain text splitters, any OpenAI-compatible LLM API (OpenRouter, Groq), Streamlit
 
 ## How it works
-1. `ingest.py` reads the PDFs in `data/`, splits them into overlapping chunks (chunks can span page breaks, and each chunk keeps its page number), embeds them (384-dim) and uploads them to Pinecone.
+1. `ingest.py` reads the PDFs in `data/`, splits them into overlapping chunks (chunks can span page breaks, and each chunk keeps its page number), embeds them (384-dim), and uploads them to Pinecone.
 2. `rag.py` embeds the question, retrieves the top-k most similar chunks (cosine similarity), drops weak matches, and asks an LLM to answer using only those chunks.
 3. `app.py` is the Streamlit chat UI. It shows the answer and an expandable list of the source passages with file name, page and similarity score.
 4. `eval.py` runs a 20-question test set and reports accuracy and average response time.
@@ -17,7 +17,7 @@ A retrieval-augmented chatbot that answers health questions **only from a set of
 ## Features
 - Answers grounded in your documents, with citations like [1], [2] that match the sources panel.
 - Refuses out-of-scope questions instead of guessing (tested with 3 off-topic questions).
-- Retry and model fallback when the free LLM API is rate-limited. Several models can be listed in `LLM_MODEL`, separated by commas.
+- Retries and falls back to another model when the free LLM API is rate-limited. Several models can be listed in `LLM_MODEL`, separated by commas.
 - Works with any OpenAI-compatible provider by changing three environment variables.
 
 ## Run locally
@@ -56,7 +56,7 @@ Never commit `.env`. It is already listed in `.gitignore`.
 5. Run `ingest.py` once from your own computer. The Pinecone index lives in the cloud, so the deployed app does not need to ingest anything.
 
 Notes for a public deployment:
-- Visitors share your LLM API quota. If you see a "service is busy" reply, the free-tier rate limit was hit. Do not put a paid key with no spending limit in a public app.
+- Visitors share your LLM API quota. If you see a "service is busy" reply, you hit the free-tier rate limit. Do not put a paid key with no spending limit in a public app.
 - The deploy installs large ML libraries, so the first build takes a few minutes.
 
 ## Evaluation
@@ -79,7 +79,7 @@ The scoring is keyword-based, so it is approximate. Some correct answers worded 
 - Answers come only from the three indexed PDFs, so it does not know anything else.
 - The test set is small (20 questions) and written by the author, so treat the accuracy as a rough guide.
 - List questions that span several passages are the hardest case for the retriever.
-- Free LLM tiers have rate limits, so responses can be slow or occasionally busy.
+- Free LLM tiers have rate limits so responses can be slow or occasionally busy.
 
 ## Data and disclaimer
 The chatbot is built on guides published by [Hesperian Health Guides](https://hesperian.org). The PDFs are not included in this repository; download them from Hesperian and place them in `data/`.
