@@ -52,7 +52,7 @@ Never commit `.env`. It is already listed in `.gitignore`.
    LLM_API_KEY = "your-llm-key"
    LLM_MODEL = "model-name-from-your-provider"
    ```
-4. Save and reboot the app. Top-level secrets are available to the app as environment variables, which is what `rag.py` reads.
+4. Save and reboot the app. The app can access top-level secrets as environment variables, which `rag.py` reads.
 5. Run `ingest.py` once from your own computer. The Pinecone index lives in the cloud, so the deployed app does not need to ingest anything.
 
 Notes for a public deployment:
