@@ -40,15 +40,18 @@ def get_index():
 def retrieve(question, k=8):
     vec = get_embedder().encode(question, normalize_embeddings=True).tolist()
     res = get_index().query(vector=vec, top_k=k, include_metadata=True)
-    return [
-        {
-            "text": m.metadata["text"],
-            "source": m.metadata["source"],
-            "page": int(m.metadata["page"]),
-            "score": m.score,
-        }
-        for m in res.matches
-    ]
+    matches = []
+    for m in res.matches:
+        metadata = m.metadata or {}
+        matches.append(
+            {
+                "text": metadata.get("text", ""),
+                "source": metadata.get("source", ""),
+                "page": int(metadata.get("page") or 0),
+                "score": m.score,
+            }
+        )
+    return matches
 
 
 def ask_llm(messages):

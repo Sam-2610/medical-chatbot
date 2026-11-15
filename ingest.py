@@ -12,6 +12,8 @@ from tqdm import tqdm
 
 from rag import DIMENSION, INDEX_NAME, get_embedder
 
+
+
 DATA_DIR = Path("data")
 CHUNK_SIZE = 1200
 CHUNK_OVERLAP = 200
